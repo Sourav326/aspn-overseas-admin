@@ -29,108 +29,105 @@
     </div>
 </div>
 
-<!-- Statistics Cards -->
+<!-- Statistics Cards - Candidate Focused -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <!-- Total Users Card -->
+    <!-- Total Candidates Card -->
     <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 stat-card">
         <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
                 <i class="fas fa-users text-indigo-600 text-xl"></i>
             </div>
             <span class="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">
-                <i class="fas fa-arrow-up mr-1"></i> {{ $userGrowth ?? 0 }}%
+                <i class="fas fa-arrow-up mr-1"></i> {{ $candidateGrowth ?? 0 }}%
             </span>
         </div>
-        <h3 class="text-3xl font-bold text-slate-800 mb-1">{{ number_format($totalUsers ?? 0) }}</h3>
-        <p class="text-sm text-slate-500 mb-3">Total Users</p>
+        <h3 class="text-3xl font-bold text-slate-800 mb-1">{{ number_format($totalCandidates ?? 0) }}</h3>
+        <p class="text-sm text-slate-500 mb-3">Total Candidates</p>
         <div class="flex items-center justify-between text-xs">
-            <span class="text-slate-400">Target: 1,000</span>
-            <span class="text-indigo-600 font-medium">{{ round(($totalUsers/1000)*100) }}%</span>
+            <span class="text-slate-400">Target: 5,000</span>
+            <span class="text-indigo-600 font-medium">{{ round(($totalCandidates/5000)*100) }}%</span>
         </div>
         <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
-            <div class="bg-indigo-600 h-1.5 rounded-full" style="width: {{ min(round(($totalUsers/1000)*100), 100) }}%"></div>
+            <div class="bg-indigo-600 h-1.5 rounded-full" style="width: {{ min(round(($totalCandidates/5000)*100), 100) }}%"></div>
         </div>
     </div>
     
-    <!-- Active Users Card -->
+    <!-- New Candidates Today Card -->
     <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 stat-card">
         <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                <i class="fas fa-user-check text-emerald-600 text-xl"></i>
+                <i class="fas fa-user-plus text-emerald-600 text-xl"></i>
             </div>
             <span class="text-sm font-medium text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-                {{ $activePercentage ?? 0 }}% active
-            </span>
-        </div>
-        <h3 class="text-3xl font-bold text-slate-800 mb-1">{{ number_format($activeUsers ?? 0) }}</h3>
-        <p class="text-sm text-slate-500 mb-3">Active Users</p>
-        <div class="flex items-center space-x-2">
-            <div class="w-full bg-slate-100 rounded-full h-1.5">
-                <div class="bg-emerald-500 h-1.5 rounded-full" style="width: {{ $activePercentage }}%"></div>
-            </div>
-            <span class="text-xs text-slate-500">{{ $activePercentage }}%</span>
-        </div>
-    </div>
-    
-    <!-- New Today Card -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 stat-card">
-        <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
-                <i class="fas fa-user-plus text-amber-600 text-xl"></i>
-            </div>
-            <span class="text-sm font-medium text-amber-600 bg-amber-50 px-3 py-1 rounded-full">
                 Last 24h
             </span>
         </div>
-        <h3 class="text-3xl font-bold text-slate-800 mb-1">{{ number_format($newToday ?? 0) }}</h3>
-        <p class="text-sm text-slate-500 mb-3">New Today</p>
+        <h3 class="text-3xl font-bold text-slate-800 mb-1">{{ number_format($newCandidatesToday ?? 0) }}</h3>
+        <p class="text-sm text-slate-500 mb-3">New Candidates</p>
         <div class="flex items-center space-x-2 text-xs">
             <span class="text-slate-400">vs yesterday:</span>
             <span class="text-green-600 font-medium">
-                <i class="fas fa-arrow-up text-xs mr-1"></i>12%
+                <i class="fas fa-arrow-up text-xs mr-1"></i>{{ $candidateGrowthDaily ?? 0 }}%
             </span>
         </div>
     </div>
     
-    <!-- Total Roles Card -->
+    <!-- Verified Candidates Card -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 stat-card">
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <i class="fas fa-check-circle text-blue-600 text-xl"></i>
+            </div>
+            <span class="text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                Verified
+            </span>
+        </div>
+        <h3 class="text-3xl font-bold text-slate-800 mb-1">{{ number_format($verifiedCandidates ?? 0) }}</h3>
+        <p class="text-sm text-slate-500 mb-3">Fully Verified</p>
+        <div class="flex items-center space-x-2">
+            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                <div class="bg-blue-500 h-1.5 rounded-full" style="width: {{ $verificationRate ?? 0 }}%"></div>
+            </div>
+            <span class="text-xs text-slate-500">{{ $verificationRate ?? 0 }}%</span>
+        </div>
+    </div>
+    
+    <!-- Placed Candidates Card -->
     <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 stat-card">
         <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                <i class="fas fa-user-tag text-purple-600 text-xl"></i>
+                <i class="fas fa-briefcase text-purple-600 text-xl"></i>
             </div>
             <span class="text-sm font-medium text-purple-600 bg-purple-50 px-3 py-1 rounded-full">
-                Roles
+                Success Rate
             </span>
         </div>
-        <h3 class="text-3xl font-bold text-slate-800 mb-1">{{ number_format($totalRoles ?? 0) }}</h3>
-        <p class="text-sm text-slate-500 mb-3">Active Roles</p>
-        <div class="flex -space-x-2">
-            @foreach(['Super Admin', 'Admin', 'Partner', 'Staff', 'User'] as $role)
-                <div class="w-8 h-8 rounded-full bg-indigo-100 border-2 border-white flex items-center justify-center text-xs font-medium text-indigo-600 hover:z-10 transition-all" title="{{ $role }}">
-                    {{ substr($role, 0, 1) }}
-                </div>
-            @endforeach
+        <h3 class="text-3xl font-bold text-slate-800 mb-1">{{ number_format($placedCandidates ?? 0) }}</h3>
+        <p class="text-sm text-slate-500 mb-3">Placed Candidates</p>
+        <div class="flex items-center space-x-2 text-xs">
+            <span class="text-slate-400">Placement Rate:</span>
+            <span class="text-green-600 font-medium">{{ $placementRate ?? 0 }}%</span>
         </div>
     </div>
 </div>
 
 <!-- Quick Stats Row -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<!-- <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"> -->
     <!-- Today's Overview -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+    <!-- <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
         <h3 class="text-lg font-bold text-slate-800 mb-4">Today's Overview</h3>
         <div class="space-y-4">
             <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-sign-in-alt text-indigo-600"></i>
+                        <i class="fas fa-user-plus text-indigo-600"></i>
                     </div>
                     <div>
                         <p class="text-sm font-medium text-slate-700">New Registrations</p>
-                        <p class="text-xs text-slate-400">Last 24 hours</p>
+                        <p class="text-xs text-slate-400">Today</p>
                     </div>
                 </div>
-                <span class="text-2xl font-bold text-indigo-600">{{ $newToday ?? 0 }}</span>
+                <span class="text-2xl font-bold text-indigo-600">{{ $newCandidatesToday ?? 0 }}</span>
             </div>
             
             <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
@@ -143,7 +140,7 @@
                         <p class="text-xs text-slate-400">Completed today</p>
                     </div>
                 </div>
-                <span class="text-2xl font-bold text-emerald-600">8</span>
+                <span class="text-2xl font-bold text-emerald-600">{{ $verificationsToday ?? 0 }}</span>
             </div>
             
             <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
@@ -152,63 +149,118 @@
                         <i class="fas fa-clock text-amber-600"></i>
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-slate-700">Pending Tasks</p>
-                        <p class="text-xs text-slate-400">Require attention</p>
+                        <p class="text-sm font-medium text-slate-700">Pending Review</p>
+                        <p class="text-xs text-slate-400">Awaiting verification</p>
                     </div>
                 </div>
-                <span class="text-2xl font-bold text-amber-600">20</span>
+                <span class="text-2xl font-bold text-amber-600">{{ $pendingCandidates ?? 0 }}</span>
             </div>
         </div>
-    </div>
+    </div> -->
     
-    <!-- Role Distribution Summary -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+    <!-- Candidate Status Distribution -->
+    <!-- <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-bold text-slate-800">Role Distribution</h3>
-            <a href="{{ route('admin.users.index') }}" class="text-sm text-indigo-600 hover:text-indigo-700">View all</a>
+            <h3 class="text-lg font-bold text-slate-800">Candidate Status</h3>
+            <a href="{{ route('admin.candidates.index') }}" class="text-sm text-indigo-600 hover:text-indigo-700">View all</a>
         </div>
         <div class="space-y-4">
-            @foreach($roleDistribution ?? [] as $role)
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <span class="w-3 h-3 rounded-full" style="background-color: {{ $role->color }}"></span>
-                    <span class="text-sm text-slate-600">{{ $role->name }}</span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="text-sm text-slate-600">Pending</span>
                 </div>
                 <div class="flex items-center space-x-3">
-                    <span class="text-sm font-semibold text-slate-800">{{ $role->count }}</span>
-                    <span class="text-xs text-slate-400 w-12">{{ round(($role->count / max($totalUsers, 1)) * 100) }}%</span>
+                    <span class="text-sm font-semibold text-slate-800">{{ $statusCounts['pending'] ?? 0 }}</span>
+                    <span class="text-xs text-slate-400 w-12">{{ round(($statusCounts['pending'] / max($totalCandidates, 1)) * 100) }}%</span>
                 </div>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-1.5">
-                <div class="rounded-full h-1.5" style="width: {{ round(($role->count / max($totalUsers, 1)) * 100) }}%; background-color: {{ $role->color }}"></div>
+                <div class="rounded-full h-1.5 bg-yellow-500" style="width: {{ round(($statusCounts['pending'] / max($totalCandidates, 1)) * 100) }}%"></div>
             </div>
-            @endforeach
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                    <span class="text-sm text-slate-600">Under Review</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm font-semibold text-slate-800">{{ $statusCounts['under_review'] ?? 0 }}</span>
+                    <span class="text-xs text-slate-400 w-12">{{ round(($statusCounts['under_review'] / max($totalCandidates, 1)) * 100) }}%</span>
+                </div>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                <div class="rounded-full h-1.5 bg-blue-500" style="width: {{ round(($statusCounts['under_review'] / max($totalCandidates, 1)) * 100) }}%"></div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                    <span class="text-sm text-slate-600">Verified/Selected</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm font-semibold text-slate-800">{{ ($statusCounts['verified'] ?? 0) + ($statusCounts['selected'] ?? 0) }}</span>
+                    <span class="text-xs text-slate-400 w-12">{{ round((($statusCounts['verified'] ?? 0) + ($statusCounts['selected'] ?? 0)) / max($totalCandidates, 1) * 100) }}%</span>
+                </div>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                <div class="rounded-full h-1.5 bg-green-500" style="width: {{ round((($statusCounts['verified'] ?? 0) + ($statusCounts['selected'] ?? 0)) / max($totalCandidates, 1) * 100) }}%"></div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                    <span class="text-sm text-slate-600">Placed</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm font-semibold text-slate-800">{{ $statusCounts['placed'] ?? 0 }}</span>
+                    <span class="text-xs text-slate-400 w-12">{{ round(($statusCounts['placed'] / max($totalCandidates, 1)) * 100) }}%</span>
+                </div>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5">
+                <div class="rounded-full h-1.5 bg-purple-500" style="width: {{ round(($statusCounts['placed'] / max($totalCandidates, 1)) * 100) }}%"></div>
+            </div>
         </div>
         
         <div class="mt-6 pt-4 border-t border-slate-100">
             <div class="flex items-center justify-between text-sm">
-                <span class="text-slate-500">Total Users</span>
-                <span class="font-bold text-slate-800">{{ number_format($totalUsers ?? 0) }}</span>
+                <span class="text-slate-500">Total Candidates</span>
+                <span class="font-bold text-slate-800">{{ number_format($totalCandidates ?? 0) }}</span>
             </div>
         </div>
-    </div>
+    </div> -->
     
-    <!-- Quick Actions -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+    <!-- Quick Actions - Candidate Focused -->
+    <!-- <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
         <h3 class="text-lg font-bold text-slate-800 mb-4">Quick Actions</h3>
         <div class="space-y-3">
-            <a href="{{ route('admin.users.create') }}" class="block p-4 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-all group">
+            <a href="{{ route('admin.candidates.index') }}" class="block p-4 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-all group">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-indigo-200 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-user-plus text-indigo-700"></i>
+                            <i class="fas fa-user-tie text-indigo-700"></i>
                         </div>
                         <div>
-                            <p class="font-medium text-indigo-900">Add New User</p>
-                            <p class="text-xs text-indigo-600">Create a new user account</p>
+                            <p class="font-medium text-indigo-900">View All Candidates</p>
+                            <p class="text-xs text-indigo-600">Manage candidate profiles</p>
                         </div>
                     </div>
                     <i class="fas fa-arrow-right text-indigo-400 group-hover:translate-x-1 transition"></i>
+                </div>
+            </a>
+            
+            <a href="{{ route('admin.candidates.index') }}?status=pending" class="block p-4 bg-amber-50 hover:bg-amber-100 rounded-xl transition-all group">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-amber-200 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-amber-700"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium text-amber-900">Pending Reviews</p>
+                            <p class="text-xs text-amber-600">{{ $pendingCandidates ?? 0 }} candidates need attention</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-arrow-right text-amber-400 group-hover:translate-x-1 transition"></i>
                 </div>
             </a>
             
@@ -220,41 +272,26 @@
                         </div>
                         <div>
                             <p class="font-medium text-emerald-900">Export Reports</p>
-                            <p class="text-xs text-emerald-600">Download user reports</p>
+                            <p class="text-xs text-emerald-600">Download candidate data</p>
                         </div>
                     </div>
                     <i class="fas fa-arrow-right text-emerald-400 group-hover:translate-x-1 transition"></i>
                 </div>
             </a>
-            
-            <a href="#" class="block p-4 bg-purple-50 hover:bg-purple-100 rounded-xl transition-all group">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-purple-200 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-envelope text-purple-700"></i>
-                        </div>
-                        <div>
-                            <p class="font-medium text-purple-900">Bulk Email</p>
-                            <p class="text-xs text-purple-600">Send emails to users</p>
-                        </div>
-                    </div>
-                    <i class="fas fa-arrow-right text-purple-400 group-hover:translate-x-1 transition"></i>
-                </div>
-            </a>
         </div>
-    </div>
-</div>
+    </div> -->
+<!-- </div> -->
 
-<!-- Recent Users and System Status -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-    <!-- Recent Users Table -->
+<!-- Recent Candidates Table -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    <!-- Recent Candidates -->
     <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
             <div>
-                <h3 class="text-lg font-bold text-slate-800">Recent Users</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Latest registered users in the system</p>
+                <h3 class="text-lg font-bold text-slate-800">Recent Candidates</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Latest registered candidates</p>
             </div>
-            <a href="{{ route('admin.users.index') }}" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center">
+            <a href="{{ route('admin.candidates.index') }}" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center">
                 View All
                 <i class="fas fa-arrow-right ml-2 text-xs"></i>
             </a>
@@ -264,65 +301,59 @@
             <table class="w-full">
                 <thead class="bg-slate-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">User</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Candidate</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Contact</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Role</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Joined</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Trade</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Industry Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Registered</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    @forelse($recentUsers ?? [] as $user)
+                    @forelse($recentCandidates ?? [] as $candidate)
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="px-6 py-4">
                             <div class="flex items-center">
                                 <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-indigo-700 text-sm font-bold">{{ substr($user->name, 0, 1) }}</span>
+                                    <span class="text-indigo-700 text-sm font-bold">{{ substr($candidate->first_name, 0, 1) }}{{ substr($candidate->last_name, 0, 1) }}</span>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm font-semibold text-slate-800">{{ $user->name }}</p>
-                                    <p class="text-xs text-slate-500">{{ '@' . $user->username }}</p>
+                                    <p class="text-sm font-semibold text-slate-800">{{ $candidate->full_name }}</p>
+                                    <p class="text-xs text-slate-500">{{ $candidate->candidate_id }}</p>
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4">
-                            <p class="text-sm text-slate-600">{{ $user->email }}</p>
-                            <p class="text-xs text-slate-400">{{ $user->phone }}</p>
+                            <p class="text-sm text-slate-600">{{ $candidate->email }}</p>
+                            <p class="text-xs text-slate-400">{{ $candidate->phone }}</p>
                         </td>
                         <td class="px-6 py-4">
-                            @foreach($user->getRoleNames() as $role)
-                                <span class="px-2 py-1 text-xs font-medium rounded-lg 
-                                    @if($role == 'super-admin') bg-purple-50 text-purple-700
-                                    @elseif($role == 'admin') bg-indigo-50 text-indigo-700
-                                    @elseif($role == 'partner') bg-emerald-50 text-emerald-700
-                                    @elseif($role == 'staff') bg-amber-50 text-amber-700
-                                    @else bg-slate-50 text-slate-700
-                                    @endif">
-                                    {{ ucfirst($role) }}
-                                </span>
-                            @endforeach
+                            <p class="text-sm font-medium text-slate-800">{{ $candidate->trade_name }}</p>
                         </td>
-                        <td class="px-6 py-4">
-                            @if($user->is_active)
-                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-emerald-50 text-emerald-700">
-                                    Active
-                                </span>
-                            @else
-                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-red-50 text-red-700">
-                                    Inactive
-                                </span>
-                            @endif
+                        <!-- <td class="px-6 py-4">
+                            <span class="px-2 py-1 text-xs font-medium rounded-full 
+                                @if($candidate->status == 'pending') bg-yellow-100 text-yellow-700
+                                @elseif($candidate->status == 'under_review') bg-blue-100 text-blue-700
+                                @elseif($candidate->status == 'shortlisted') bg-purple-100 text-purple-700
+                                @elseif($candidate->status == 'selected') bg-green-100 text-green-700
+                                @elseif($candidate->status == 'placed') bg-emerald-100 text-emerald-700
+                                @else bg-red-100 text-red-700
+                                @endif">
+                                {{ ucfirst(str_replace('_', ' ', $candidate->status)) }}
+                            </span>
+                        </td> -->
+                        <td class="px-6 py-4 text-sm text-slate-500">
+                            {{ $candidate->industry_type }}
                         </td>
                         <td class="px-6 py-4 text-sm text-slate-500">
-                            {{ $user->created_at->diffForHumans() }}
+                            {{ $candidate->registered_at->diffForHumans() }}
                         </td>
                     </tr>
                     @empty
                     <tr>
                         <td colspan="5" class="px-6 py-8 text-center">
                             <div class="flex flex-col items-center">
-                                <i class="fas fa-users text-4xl text-slate-300 mb-2"></i>
-                                <p class="text-sm text-slate-500">No users found</p>
+                                <i class="fas fa-user-tie text-4xl text-slate-300 mb-2"></i>
+                                <p class="text-sm text-slate-500">No candidates found</p>
                             </div>
                         </td>
                     </tr>
@@ -335,7 +366,7 @@
     <!-- Right Column - System Status & Pending Tasks -->
     <div class="space-y-6">
         <!-- System Status -->
-        <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-6 shadow-lg">
+        <!-- <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-6 shadow-lg">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-bold text-white">System Status</h3>
                 <span class="px-3 py-1 bg-white/20 rounded-full text-xs text-white">All Systems Operational</span>
@@ -363,13 +394,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         
-        <!-- Pending Tasks -->
-        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+        <!-- Pending Verification Tasks -->
+        <!-- <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-bold text-slate-800">Pending Tasks</h3>
-                <span class="px-3 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-medium">20 total</span>
+                <span class="px-3 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-medium">{{ $pendingCandidates ?? 0 }} total</span>
             </div>
             <div class="space-y-3">
                 <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
@@ -378,70 +409,70 @@
                             <i class="fas fa-check-circle text-amber-600"></i>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-slate-700">Verifications</p>
-                            <p class="text-xs text-slate-400">Documents to verify</p>
+                            <p class="text-sm font-medium text-slate-700">Document Verification</p>
+                            <p class="text-xs text-slate-400">Candidates to verify</p>
                         </div>
                     </div>
-                    <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-lg text-sm font-bold">12</span>
+                    <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-lg text-sm font-bold">{{ $pendingVerifications ?? 0 }}</span>
                 </div>
                 
                 <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-envelope text-blue-600"></i>
+                            <i class="fas fa-file-alt text-blue-600"></i>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-slate-700">Contact Forms</p>
-                            <p class="text-xs text-slate-400">Awaiting response</p>
+                            <p class="text-sm font-medium text-slate-700">Background Check</p>
+                            <p class="text-xs text-slate-400">In progress</p>
                         </div>
                     </div>
-                    <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-sm font-bold">5</span>
+                    <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-sm font-bold">{{ $pendingBackgroundChecks ?? 0 }}</span>
                 </div>
                 
                 <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-file-alt text-purple-600"></i>
+                            <i class="fas fa-briefcase text-purple-600"></i>
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-slate-700">New Demands</p>
-                            <p class="text-xs text-slate-400">Open positions</p>
+                            <p class="text-sm font-medium text-slate-700">Placement Process</p>
+                            <p class="text-xs text-slate-400">Awaiting confirmation</p>
                         </div>
                     </div>
-                    <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-lg text-sm font-bold">3</span>
+                    <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-lg text-sm font-bold">{{ $pendingPlacements ?? 0 }}</span>
                 </div>
             </div>
             
-            <a href="#" class="block text-center mt-4 text-sm text-indigo-600 hover:text-indigo-700 font-medium">
-                View all tasks <i class="fas fa-arrow-right ml-1 text-xs"></i>
+            <a href="{{ route('admin.candidates.index') }}?status=pending" class="block text-center mt-4 text-sm text-indigo-600 hover:text-indigo-700 font-medium">
+                View all pending <i class="fas fa-arrow-right ml-1 text-xs"></i>
             </a>
-        </div>
+        </div> -->
         
         <!-- Quick Stats -->
-        <div class="bg-emerald-50 rounded-2xl p-6 border border-emerald-100">
+        <!-- <div class="bg-emerald-50 rounded-2xl p-6 border border-emerald-100">
             <h3 class="text-lg font-bold text-emerald-800 mb-3">Today's Stats</h3>
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <p class="text-emerald-600 text-xs">Conversion Rate</p>
-                    <p class="text-2xl font-bold text-emerald-800">23%</p>
-                    <p class="text-xs text-emerald-600">↑ 5% from yesterday</p>
+                    <p class="text-emerald-600 text-xs">Verification Rate</p>
+                    <p class="text-2xl font-bold text-emerald-800">{{ $verificationRate ?? 0 }}%</p>
+                    <p class="text-xs text-emerald-600">↑ {{ $verificationGrowth ?? 0 }}% from yesterday</p>
                 </div>
                 <div>
-                    <p class="text-emerald-600 text-xs">Avg. Response</p>
-                    <p class="text-2xl font-bold text-emerald-800">2.4h</p>
-                    <p class="text-xs text-emerald-600">↓ 30min improvement</p>
+                    <p class="text-emerald-600 text-xs">Placement Rate</p>
+                    <p class="text-2xl font-bold text-emerald-800">{{ $placementRate ?? 0 }}%</p>
+                    <p class="text-xs text-emerald-600">Target: 30%</p>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
-<!-- Recent Activity -->
-<div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+<!-- Recent Activity - Candidate Focused -->
+<!-- <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
     <div class="flex justify-between items-center mb-6">
         <div>
             <h3 class="text-lg font-bold text-slate-800">Recent Activity</h3>
-            <p class="text-sm text-slate-500">Latest activities across the system</p>
+            <p class="text-sm text-slate-500">Latest candidate activities</p>
         </div>
         <a href="#" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">View All</a>
     </div>
@@ -453,8 +484,8 @@
                     <i class="fas fa-user-plus text-emerald-600 text-sm"></i>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-slate-800">New user registered</p>
-                    <p class="text-xs text-slate-500">John Doe created an account</p>
+                    <p class="text-sm font-medium text-slate-800">New candidate registered</p>
+                    <p class="text-xs text-slate-500">John Doe - Electrician</p>
                 </div>
             </div>
             <span class="text-xs text-slate-400">5 min ago</span>
@@ -467,7 +498,7 @@
                 </div>
                 <div>
                     <p class="text-sm font-medium text-slate-800">Candidate verified</p>
-                    <p class="text-xs text-slate-500">Staff verified candidate #1234</p>
+                    <p class="text-xs text-slate-500">Sarah Johnson - Documents verified</p>
                 </div>
             </div>
             <span class="text-xs text-slate-400">1 hour ago</span>
@@ -476,11 +507,11 @@
         <div class="flex items-center justify-between py-3 border-b border-slate-100 last:border-0">
             <div class="flex items-center space-x-4">
                 <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-file-alt text-purple-600 text-sm"></i>
+                    <i class="fas fa-briefcase text-purple-600 text-sm"></i>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-slate-800">New demand created</p>
-                    <p class="text-xs text-slate-500">Client created demand for 5 engineers</p>
+                    <p class="text-sm font-medium text-slate-800">Candidate placed</p>
+                    <p class="text-xs text-slate-500">Mike Smith - Placed in Dubai</p>
                 </div>
             </div>
             <span class="text-xs text-slate-400">2 hours ago</span>
@@ -489,15 +520,15 @@
         <div class="flex items-center justify-between py-3 border-b border-slate-100 last:border-0">
             <div class="flex items-center space-x-4">
                 <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-envelope text-amber-600 text-sm"></i>
+                    <i class="fas fa-file-alt text-amber-600 text-sm"></i>
                 </div>
                 <div>
-                    <p class="text-sm font-medium text-slate-800">Contact form submitted</p>
-                    <p class="text-xs text-slate-500">New inquiry from website</p>
+                    <p class="text-sm font-medium text-slate-800">New resume uploaded</p>
+                    <p class="text-xs text-slate-500">Ahmed Ali - Uploaded new CV</p>
                 </div>
             </div>
             <span class="text-xs text-slate-400">3 hours ago</span>
         </div>
     </div>
-</div>
+</div> -->
 @endsection

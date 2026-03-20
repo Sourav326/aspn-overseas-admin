@@ -134,48 +134,51 @@
                         <span class="font-medium">Dashboard</span>
                     </a>
                     
-                    <a href="{{ route('admin.users.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
+                    <!-- <a href="{{ route('admin.users.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-users w-5"></i>
                         <span class="font-medium">User Management</span>
                         <span class="ml-auto bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded-full">New</span>
-                    </a>
+                    </a> -->
                     
                     <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-4 mb-2 mt-6">Modules</div>
                     
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
+                    <!-- Candidate Management (for registered candidates) -->
+                    <a href="{{ route('admin.candidates.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-user-tie w-5"></i>
-                        <span class="font-medium">Candidates</span>
-                        <span class="ml-auto bg-slate-800 text-slate-300 text-xs px-2 py-1 rounded-full">24</span>
+                        <span class="font-medium">Candidate Management</span>
+                        @if($pendingCandidatesCount ?? 0 > 0)
+                        <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ $pendingCandidatesCount }}</span>
+                        @endif
+                    </a>
+                    <a href="{{ route('admin.clients.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
+                        <i class="fas fa-user-tie w-5"></i>
+                        <span class="font-medium">Employer Management</span>
                     </a>
                     
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
+                    <!-- <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-handshake w-5"></i>
                         <span class="font-medium">Partners</span>
                     </a>
-                    
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
-                        <i class="fas fa-building w-5"></i>
-                        <span class="font-medium">Clients</span>
-                    </a>
-                    
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
+                     -->
+            
+                    <!-- <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-file-alt w-5"></i>
                         <span class="font-medium">Demands</span>
                         <span class="ml-auto bg-orange-500/20 text-orange-400 text-xs px-2 py-1 rounded-full">5</span>
-                    </a>
+                    </a> -->
                     
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
+                    <!-- <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-check-circle w-5"></i>
                         <span class="font-medium">Verifications</span>
-                    </a>
+                    </a> -->
                     
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
+                    <!-- <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-envelope w-5"></i>
                         <span class="font-medium">Contact Forms</span>
                         <span class="ml-auto bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded-full">3</span>
-                    </a>
+                    </a> -->
                     
-                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-4 mb-2 mt-6">Settings</div>
+                    <!-- <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-4 mb-2 mt-6">Settings</div>
                     
                     <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-cog w-5"></i>
@@ -185,7 +188,7 @@
                     <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-shield-alt w-5"></i>
                         <span class="font-medium">Roles & Permissions</span>
-                    </a>
+                    </a> -->
                     
                     <form method="POST" action="{{ route('admin.logout') }}" class="pt-4 mt-4 border-t border-slate-800">
                         @csrf
@@ -234,19 +237,19 @@
                     
                     <div class="flex items-center space-x-4">
                         <!-- Search -->
-                        <div class="relative hidden md:block">
+                        <!-- <div class="relative hidden md:block">
                             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"></i>
                             <input type="text" placeholder="Search..." 
                                    class="pl-10 pr-4 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent w-64">
-                        </div>
+                        </div> -->
                         
                         <!-- Notifications -->
-                        <div class="relative">
+                        <!-- <div class="relative">
                             <button class="p-2 hover:bg-slate-100 rounded-xl transition relative">
                                 <i class="fas fa-bell text-slate-600 text-xl"></i>
                                 <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                             </button>
-                        </div>
+                        </div> -->
                         
                         <!-- User Dropdown -->
                         <div class="relative" x-data="{ open: false }">
@@ -255,7 +258,7 @@
                                     <span class="text-white text-sm font-bold">{{ substr(auth()->user()->name, 0, 1) }}</span>
                                 </div>
                                 <span class="text-sm font-medium text-slate-700 hidden md:block">{{ auth()->user()->name }}</span>
-                                <i class="fas fa-chevron-down text-xs text-slate-500"></i>
+                                <!-- <i class="fas fa-chevron-down text-xs text-slate-500"></i> -->
                             </button>
                         </div>
                     </div>

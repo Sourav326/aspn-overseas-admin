@@ -63,4 +63,14 @@ class User extends Authenticatable
             $q->where('name', $role);
         });
     }
+
+    public function candidate()
+    {
+        return $this->hasOne(Candidate::class);
+    }
+
+    public function isCandidate()
+    {
+        return $this->hasRole('candidate');
+    }
 }

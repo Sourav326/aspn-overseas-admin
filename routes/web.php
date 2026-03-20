@@ -9,6 +9,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CandidateController;
+use App\Http\Controllers\Admin\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,4 +72,28 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/users/export/pdf', [UserController::class, 'exportPdf'])->name('users.export.pdf');
     Route::get('/users/export/modal', [UserController::class, 'showExportModal'])->name('users.export.modal');
     Route::post('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
+});
+
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    // ... existing routes ...
+    
+    // Candidate Management Routes
+    Route::resource('candidates', CandidateController::class);
+    Route::post('/candidates/{id}/verify', [CandidateController::class, 'verify'])->name('candidates.verify');
+    Route::get('/candidates/{id}/download-resume', [CandidateController::class, 'downloadResume'])->name('candidates.download-resume');
+    
+    // Candidate Export Routes
+    Route::get('/candidates/export/excel', [CandidateController::class, 'exportExcel'])->name('candidates.export.excel');
+    Route::get('/candidates/export/csv', [CandidateController::class, 'exportCsv'])->name('candidates.export.csv');
+    Route::get('/candidates/export/pdf', [CandidateController::class, 'exportPdf'])->name('candidates.export.pdf');
+    
+    // Client Management
+    Route::resource('clients', ClientController::class);
+    Route::post('/clients/{id}/verify', [ClientController::class, 'verify'])->name('clients.verify');
+
+     // Client Export Routes
+    Route::get('/clients/export/excel', [ClientController::class, 'exportExcel'])->name('clients.export.excel');
+    Route::get('/clients/export/csv', [ClientController::class, 'exportCsv'])->name('clients.export.csv');
+    Route::get('/clients/export/pdf', [ClientController::class, 'exportPdf'])->name('clients.export.pdf');
 });

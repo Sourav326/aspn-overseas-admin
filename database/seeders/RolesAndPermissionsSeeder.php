@@ -14,7 +14,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // Reset cached roles and permissions
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Create permissions
+        // Create all permissions
         $permissions = [
             // Dashboard access
             'access dashboard',
@@ -46,17 +46,19 @@ class RolesAndPermissionsSeeder extends Seeder
             'export candidates',
             'import candidates',
             
+            // Client management (Foreign Employers)
+            'view clients',
+            'create clients',
+            'edit clients',
+            'delete clients',
+            'verify clients',
+            'export clients',
+            
             // Document management
             'view documents',
             'upload documents',
             'verify documents',
             'delete documents',
-            
-            // Client management
-            'view clients',
-            'create clients',
-            'edit clients',
-            'delete clients',
             
             // Partner management
             'view partners',
@@ -96,18 +98,32 @@ class RolesAndPermissionsSeeder extends Seeder
             // Settings
             'view settings',
             'edit settings',
+            
+            // Candidate specific permissions (for frontend)
+            'view own profile',
+            'edit own profile',
+            'view application status',
+            
+            // Client specific permissions (for frontend)
+            'view own client profile',
+            'edit own client profile',
+            'post job demands',
+            'view applications',
+            'export clients',
         ];
 
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // Create roles (using firstOrCreate to avoid duplicates)
+        // Create roles
         $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $partnerRole = Role::firstOrCreate(['name' => 'partner']);
         $staffRole = Role::firstOrCreate(['name' => 'staff']);
         $userRole = Role::firstOrCreate(['name' => 'user']);
+        $candidateRole = Role::firstOrCreate(['name' => 'candidate']);
+        $clientRole = Role::firstOrCreate(['name' => 'client']); // Add client role
 
         // Assign permissions to Super Admin (ALL permissions)
         $superAdminRole->syncPermissions(Permission::all());
@@ -117,7 +133,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'access admin dashboard',
             'access dashboard',
             
-            // User management (but not delete)
+            // User management
             'view users',
             'create users',
             'edit users',
@@ -130,15 +146,17 @@ class RolesAndPermissionsSeeder extends Seeder
             'export candidates',
             'import candidates',
             
+            // Client management (Foreign Employers)
+            'view clients',
+            'create clients',
+            'edit clients',
+            'verify clients',
+            'export clients',
+            
             // Document management
             'view documents',
             'upload documents',
             'verify documents',
-            
-            // Client management
-            'view clients',
-            'create clients',
-            'edit clients',
             
             // Partner management
             'view partners',
@@ -170,13 +188,14 @@ class RolesAndPermissionsSeeder extends Seeder
             // Contact submissions
             'view contact submissions',
             'reply to contact submissions',
+            'export clients',
         ]);
 
         // Assign permissions to Partner
         $partnerRole->syncPermissions([
             'access dashboard',
             
-            // Candidate management (view only their own candidates)
+            // Candidate management
             'view candidates',
             'create candidates',
             'edit candidates',
@@ -185,13 +204,13 @@ class RolesAndPermissionsSeeder extends Seeder
             'view documents',
             'upload documents',
             
-            // Demand management (view only)
+            // Demand management
             'view demands',
             
             // Application management
             'view applications',
             
-            // Reports (basic)
+            // Reports
             'view reports',
         ]);
 
@@ -199,7 +218,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $staffRole->syncPermissions([
             'access dashboard',
             
-            // Candidate management (view and process but not create/edit)
+            // Candidate management
             'view candidates',
             'verify candidates',
             
@@ -221,8 +240,43 @@ class RolesAndPermissionsSeeder extends Seeder
             'access dashboard',
         ]);
 
-        // Assign roles to existing users (using firstOrCreate to avoid duplicates)
+        // Assign permissions to Candidate
+        $candidateRole->syncPermissions([
+            'view own profile',
+            'edit own profile',
+            'view application status',
+        ]);
+
+        // Assign permissions to Client (Foreign Employer)
+        $clientRole->syncPermissions([
+            'view own client profile',
+            'edit own client profile',
+            'post job demands',
+            'view applications',
+        ]);
+
+        // Create test users with roles
+        $this->createTestUsers();
         
+        $this->command->info('====================================');
+        $this->command->info('Roles and permissions created successfully!');
+        $this->command->info('====================================');
+        $this->command->info('Available roles: super-admin, admin, partner, staff, user, candidate, client');
+        $this->command->info('');
+        $this->command->info('Test Users Created:');
+        $this->command->info('------------------------------------');
+        $this->command->info('Super Admin: superadmin@aspnoverseas.com / password');
+        $this->command->info('Admin: admin@aspnoverseas.com / password');
+        $this->command->info('Partner: partner@aspnoverseas.com / password');
+        $this->command->info('Staff: staff@aspnoverseas.com / password');
+        $this->command->info('User: user@aspnoverseas.com / password');
+        $this->command->info('Candidate: candidate@aspnoverseas.com / password');
+        $this->command->info('Client: client@aspnoverseas.com / password');
+        $this->command->info('====================================');
+    }
+    
+    private function createTestUsers()
+    {
         // Super Admin
         $superAdmin = User::firstOrCreate(
             ['email' => 'superadmin@aspnoverseas.com'],
@@ -235,7 +289,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $superAdmin->syncRoles(['super-admin']);
-
+        
         // Admin
         $admin = User::firstOrCreate(
             ['email' => 'admin@aspnoverseas.com'],
@@ -248,7 +302,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $admin->syncRoles(['admin']);
-
+        
         // Partner
         $partner = User::firstOrCreate(
             ['email' => 'partner@aspnoverseas.com'],
@@ -261,7 +315,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $partner->syncRoles(['partner']);
-
+        
         // Staff
         $staff = User::firstOrCreate(
             ['email' => 'staff@aspnoverseas.com'],
@@ -274,7 +328,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $staff->syncRoles(['staff']);
-
+        
         // Regular User
         $user = User::firstOrCreate(
             ['email' => 'user@aspnoverseas.com'],
@@ -287,22 +341,31 @@ class RolesAndPermissionsSeeder extends Seeder
             ]
         );
         $user->syncRoles(['user']);
-
-        // Inactive User (for testing)
-        $inactive = User::firstOrCreate(
-            ['email' => 'inactive@aspnoverseas.com'],
+        
+        // Candidate User (for testing)
+        $candidateUser = User::firstOrCreate(
+            ['email' => 'candidate@aspnoverseas.com'],
             [
-                'name' => 'Inactive User',
-                'username' => 'inactive',
+                'name' => 'Candidate User',
+                'username' => 'candidate',
                 'phone' => '+1234567895',
                 'password' => bcrypt('password'),
-                'is_active' => false,
+                'is_active' => true,
             ]
         );
-        $inactive->syncRoles(['user']);
-
-        $this->command->info('Roles and permissions created successfully!');
-        $this->command->info('Created users: superadmin, admin, partner, staff, user, inactive');
-        $this->command->info('Default password for all users: password');
+        $candidateUser->syncRoles(['candidate']);
+        
+        // Client User (Foreign Employer - for testing)
+        $clientUser = User::firstOrCreate(
+            ['email' => 'client@aspnoverseas.com'],
+            [
+                'name' => 'Client User',
+                'username' => 'client',
+                'phone' => '+1234567896',
+                'password' => bcrypt('password'),
+                'is_active' => true,
+            ]
+        );
+        $clientUser->syncRoles(['client']);
     }
 }

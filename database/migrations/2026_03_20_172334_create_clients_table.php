@@ -8,42 +8,38 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('candidates', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('uuid')->unique();
-            $table->string('candidate_id')->unique(); // CAN202400001
+            $table->string('client_id')->unique(); // CLI202400001
             
             // Personal Information
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('name');
+            $table->string('organization_name');
             $table->string('phone')->unique();
             $table->string('whatsapp_number')->nullable();
             $table->string('email')->unique();
-            $table->string('passport_number')->nullable()->unique();
-            
-            // Experience
-            $table->integer('indian_experience_years')->default(0);
-            $table->integer('overseas_experience_years')->default(0);
-            
-            // Professional Information
-            $table->string('trade_name');
             $table->string('industry_type');
-            
-            // Resume/File
-            $table->string('resume_path')->nullable();
-            $table->string('resume_original_name')->nullable();
-            $table->string('resume_size')->nullable();
-            $table->string('resume_mime_type')->nullable();
             
             // Status
             $table->enum('status', [
                 'pending', 
-                'under_review', 
-                'shortlisted', 
-                'selected', 
-                'rejected', 
-                'placed'
+                'approved', 
+                'active', 
+                'suspended', 
+                'rejected'
             ])->default('pending');
+            
+            // Verification
+            $table->enum('verification_status', [
+                'pending', 
+                'verified', 
+                'rejected'
+            ])->default('pending');
+            
+            $table->text('verification_notes')->nullable();
+            $table->foreignId('verified_by')->nullable()->constrained('users');
+            $table->timestamp('verified_at')->nullable();
             
             // Tracking
             $table->string('registered_from_ip')->nullable();
@@ -52,15 +48,13 @@ return new class extends Migration
             
             // Foreign Keys
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('verified_by')->nullable()->constrained('users');
-            $table->timestamp('verified_at')->nullable();
             
             $table->softDeletes();
             $table->timestamps();
             
-            // Indexes for performance
+            // Indexes
             $table->index('status');
-            $table->index('trade_name');
+            $table->index('verification_status');
             $table->index('industry_type');
             $table->index('created_at');
         });
@@ -68,6 +62,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('candidates');
+        Schema::dropIfExists('clients');
     }
 };
