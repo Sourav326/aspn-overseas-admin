@@ -64,6 +64,9 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
         
+        // Monthly statistics for chart (last 6 months)
+        $monthlyStats = $this->getMonthlyStats();
+        
         return view('admin.dashboard.index', compact(
             'totalCandidates',
             'newCandidatesToday',
@@ -80,7 +83,8 @@ class DashboardController extends Controller
             'statusCounts',
             'employerStatusCounts',
             'recentCandidates',
-            'recentEmployers'
+            'recentEmployers',
+            'monthlyStats'
         ));
     }
     
@@ -118,5 +122,42 @@ class DashboardController extends Controller
         }
         
         return round((($thisMonth - $lastMonth) / $lastMonth) * 100);
+    }
+    
+    private function getMonthlyStats()
+    {
+        $months = [];
+        $candidatesData = [];
+        $employersData = [];
+        
+        // Get last 6 months
+        for ($i = 5; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $monthName = $date->format('M Y');
+            $months[] = $monthName;
+            
+            // Count candidates for this month
+            $candidatesCount = Candidate::whereYear('registered_at', $date->year)
+                ->whereMonth('registered_at', $date->month)
+                ->count();
+            $candidatesData[] = $candidatesCount;
+            
+            // Count employers for this month
+            $employersCount = Client::whereYear('registered_at', $date->year)
+                ->whereMonth('registered_at', $date->month)
+                ->count();
+            $employersData[] = $employersCount;
+        }
+        
+        $monthlyStats = [];
+        for ($i = 0; $i < count($months); $i++) {
+            $monthlyStats[] = [
+                'month' => $months[$i],
+                'candidates' => $candidatesData[$i],
+                'employers' => $employersData[$i]
+            ];
+        }
+        
+        return $monthlyStats;
     }
 }

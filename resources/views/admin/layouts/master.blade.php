@@ -103,7 +103,7 @@
                 </div>
                 
                 <!-- User Profile Card -->
-                <div class="bg-slate-800/50 rounded-2xl p-4 mb-6 border border-slate-700/50">
+                <div class="bg-slate-800/50 rounded-2xl p-4 mb-6 border border-slate-400">
                     <div class="flex items-center space-x-3">
                         <div class="flex-1">
                             <p class="font-semibold">{{ auth()->user()->name }}</p>
