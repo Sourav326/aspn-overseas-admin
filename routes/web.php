@@ -20,16 +20,18 @@ use App\Http\Controllers\Admin\ClientController;
 
 // Public routes
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.auth.login');
 });
 
 // Guest routes
 Route::middleware('guest')->group(function () {
     // User authentication
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegisterController::class, 'register']);
+    // Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    // Route::post('/login', [LoginController::class, 'login']);
+    // Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    // Route::post('/register', [RegisterController::class, 'register']);
+    Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminLoginController::class, 'login']);
     
     // Password Reset Routes
     Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');

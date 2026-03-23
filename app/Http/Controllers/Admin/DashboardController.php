@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Candidate;
+use App\Models\Client;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -19,18 +19,20 @@ class DashboardController extends Controller
         $placedCandidates = Candidate::where('status', 'placed')->count();
         $pendingCandidates = Candidate::where('status', 'pending')->count();
         
-        // Calculate growth rates (example - you can calculate actual growth from previous day/week)
+        // Employer/Client Statistics
+        $totalEmployers = Client::count();
+        $newEmployersToday = Client::whereDate('registered_at', today())->count();
+        $activeEmployers = Client::where('status', 'active')->count();
+        
+        // Calculate growth rates
         $candidateGrowth = $this->calculateCandidateGrowth();
         $candidateGrowthDaily = $this->calculateDailyCandidateGrowth();
+        $employerGrowth = $this->calculateEmployerGrowth();
         
         // Calculate rates
         $verificationRate = $totalCandidates > 0 ? round(($verifiedCandidates / $totalCandidates) * 100) : 0;
-        $placementRate = $totalCandidates > 0 ? round(($placedCandidates / $totalCandidates) * 100) : 0;
         
-        // Today's verifications (example data)
-        $verificationsToday = Candidate::whereDate('verified_at', today())->count();
-        
-        // Status counts for distribution
+        // Status counts for candidates
         $statusCounts = [
             'pending' => Candidate::where('status', 'pending')->count(),
             'under_review' => Candidate::where('status', 'under_review')->count(),
@@ -41,10 +43,14 @@ class DashboardController extends Controller
             'rejected' => Candidate::where('status', 'rejected')->count(),
         ];
         
-        // Pending tasks counts
-        $pendingVerifications = Candidate::where('verification_status', 'pending')->count();
-        $pendingBackgroundChecks = Candidate::where('verification_status', 'document_verified')->count();
-        $pendingPlacements = Candidate::where('status', 'selected')->count();
+        // Status counts for employers
+        $employerStatusCounts = [
+            'pending' => Client::where('status', 'pending')->count(),
+            'approved' => Client::where('status', 'approved')->count(),
+            'active' => Client::where('status', 'active')->count(),
+            'suspended' => Client::where('status', 'suspended')->count(),
+            'rejected' => Client::where('status', 'rejected')->count(),
+        ];
         
         // Recent candidates (last 5)
         $recentCandidates = Candidate::with('user')
@@ -52,21 +58,11 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
         
-        // Chart data for last 7 days (candidate registrations)
-        $chartLabels = [];
-        $chartData = [];
-        
-        for ($i = 6; $i >= 0; $i--) {
-            $date = now()->subDays($i);
-            $chartLabels[] = $date->format('D');
-            $chartData[] = Candidate::whereDate('registered_at', $date)->count();
-        }
-        
-        // Verification growth (example)
-        $verificationGrowth = 12; // You can calculate actual growth
-        
-        // Storage used (example)
-        $storageUsed = 45;
+        // Recent employers (last 5)
+        $recentEmployers = Client::with('user')
+            ->latest()
+            ->take(5)
+            ->get();
         
         return view('admin.dashboard.index', compact(
             'totalCandidates',
@@ -74,26 +70,22 @@ class DashboardController extends Controller
             'verifiedCandidates',
             'placedCandidates',
             'pendingCandidates',
+            'totalEmployers',
+            'newEmployersToday',
+            'activeEmployers',
             'candidateGrowth',
             'candidateGrowthDaily',
+            'employerGrowth',
             'verificationRate',
-            'placementRate',
-            'verificationsToday',
             'statusCounts',
-            'pendingVerifications',
-            'pendingBackgroundChecks',
-            'pendingPlacements',
+            'employerStatusCounts',
             'recentCandidates',
-            'chartLabels',
-            'chartData',
-            'verificationGrowth',
-            'storageUsed'
+            'recentEmployers'
         ));
     }
     
     private function calculateCandidateGrowth()
     {
-        // Calculate growth from previous month
         $lastMonth = Candidate::whereMonth('registered_at', now()->subMonth()->month)->count();
         $thisMonth = Candidate::whereMonth('registered_at', now()->month)->count();
         
@@ -106,7 +98,6 @@ class DashboardController extends Controller
     
     private function calculateDailyCandidateGrowth()
     {
-        // Calculate growth from yesterday
         $yesterday = Candidate::whereDate('registered_at', now()->subDay())->count();
         $today = Candidate::whereDate('registered_at', today())->count();
         
@@ -115,5 +106,17 @@ class DashboardController extends Controller
         }
         
         return round((($today - $yesterday) / $yesterday) * 100);
+    }
+    
+    private function calculateEmployerGrowth()
+    {
+        $lastMonth = Client::whereMonth('registered_at', now()->subMonth()->month)->count();
+        $thisMonth = Client::whereMonth('registered_at', now()->month)->count();
+        
+        if ($lastMonth == 0) {
+            return $thisMonth > 0 ? 100 : 0;
+        }
+        
+        return round((($thisMonth - $lastMonth) / $lastMonth) * 100);
     }
 }

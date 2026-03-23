@@ -93,8 +93,8 @@
             <div class="p-6">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3 mb-8">
-                    <div class="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-briefcase text-white text-xl"></i>
+                   <div class="flex justify-center mb-4">
+                        <img src="{{ asset('assets/img/ASPN-logo.png') }}" alt="ASPN Overseas Logo" class="w-20 h-20 object-contain">
                     </div>
                     <div>
                         <h1 class="text-xl font-bold tracking-tight">ASPN Overseas</h1>
@@ -105,9 +105,6 @@
                 <!-- User Profile Card -->
                 <div class="bg-slate-800/50 rounded-2xl p-4 mb-6 border border-slate-700/50">
                     <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center shadow-lg">
-                            <span class="text-white font-bold text-lg">{{ substr(auth()->user()->name, 0, 1) }}</span>
-                        </div>
                         <div class="flex-1">
                             <p class="font-semibold">{{ auth()->user()->name }}</p>
                             <p class="text-xs text-slate-400 mt-0.5">{{ auth()->user()->email }}</p>
@@ -205,8 +202,8 @@
         <div class="md:hidden fixed top-0 left-0 right-0 bg-slate-900 text-white p-4 z-50">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
-                        <i class="fas fa-briefcase text-white text-sm"></i>
+                    <div class="flex justify-center mb-4">
+                        <img src="{{ asset('assets/img/ASPN-logo.png') }}" alt="ASPN Overseas Logo" class="w-20 h-20 object-contain">
                     </div>
                     <span class="font-bold">ASPN Overseas</span>
                 </div>

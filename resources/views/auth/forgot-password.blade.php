@@ -10,8 +10,14 @@
     <div class="min-h-screen flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-md w-96">
             <div class="text-center mb-8">
+                <div class="flex justify-center mb-4">
+                    <img src="{{ asset('assets/img/ASPN-logo.png') }}" alt="ASPN Overseas Logo" class="w-20 h-20 object-contain">
+                </div>
                 <h2 class="text-2xl font-bold text-gray-800">ASPN Overseas</h2>
-                <p class="text-gray-600">Reset your password</p>
+                <p class="text-gray-600 text-sm mt-1">Admin Panel Login</p>
+                <div class="mt-3 flex justify-center">
+                    <div class="h-px w-12 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+                </div>
             </div>
 
             @if($errors->any())
