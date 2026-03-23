@@ -83,11 +83,11 @@
                         required>
                 </div>
 
-                <div class="mb-6 flex items-center justify-between">
-                    <label class="flex items-center cursor-pointer">
+                <div class="mb-6 flex items-center justify-end">
+                    <!-- <label class="flex items-center cursor-pointer">
                         <input type="checkbox" name="remember" id="remember" class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2">
                         <span class="ml-2 text-sm text-gray-400">Remember Me</span>
-                    </label>
+                    </label> -->
                     <a href="{{route('password.request')}}" class="text-sm text-blue-400 hover:text-blue-300 transition">
                         Forgot Password?
                     </a>

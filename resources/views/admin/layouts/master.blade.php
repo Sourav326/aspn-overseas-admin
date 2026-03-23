@@ -126,11 +126,10 @@
                 <nav class="space-y-1">
                     <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-4 mb-2">Main</div>
                     
-                    <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl bg-gradient-primary text-white shadow-lg">
+                   <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl shadow-lg {{ request()->routeIs('admin.dashboard') ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                         <i class="fas fa-chart-pie w-5"></i>
                         <span class="font-medium">Dashboard</span>
                     </a>
-                    
                     <!-- <a href="{{ route('admin.users.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
                         <i class="fas fa-users w-5"></i>
                         <span class="font-medium">User Management</span>
@@ -140,15 +139,18 @@
                     <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-4 mb-2 mt-6">Modules</div>
                     
                     <!-- Candidate Management (for registered candidates) -->
-                    <a href="{{ route('admin.candidates.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
+                    <a href="{{ route('admin.candidates.index') }}" 
+                    class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.candidates.*') ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
                         <i class="fas fa-user-tie w-5"></i>
                         <span class="font-medium">Candidate Management</span>
                         @if($pendingCandidatesCount ?? 0 > 0)
                         <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ $pendingCandidatesCount }}</span>
                         @endif
                     </a>
-                    <a href="{{ route('admin.clients.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200">
-                        <i class="fas fa-user-tie w-5"></i>
+
+                    <a href="{{ route('admin.clients.index') }}" 
+                    class="flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.clients.*') ? 'bg-orange-500 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                        <i class="fas fa-building w-5"></i>
                         <span class="font-medium">Employer Management</span>
                     </a>
                     
